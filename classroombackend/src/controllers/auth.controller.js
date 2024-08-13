@@ -140,3 +140,13 @@ export const logout = asynchandler(async (req, res) => {
     throw new ApiError(500,"UnAuthorize User")
   }
 });
+
+export const getCurrentUser = asynchandler(async (req, res) => {
+  try {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, req.user, "User fetched Successfully"));
+  
+  } catch (error) {
+    throw new ApiError(500,"Server Error ");
+  }});
