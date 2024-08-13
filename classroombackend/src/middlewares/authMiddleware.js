@@ -19,7 +19,7 @@ export const verifyJWT = asynchandler(async (req, _, next) => {
     if (!decodedJWT) {
       throw new ApiError(401, "Unauthorized request from middleware");
     }
-    console.log("ID: ",decodedJWT.id)
+    console.log("ID: ", decodedJWT.id);
     const user = await User.findById(decodedJWT?.id).select(
       "-password -refreshToken"
     );
@@ -40,7 +40,7 @@ export const admin = asynchandler((req, res, next) => {
   if (req.user && req.user.role === "principal") {
     next();
   } else {
-    throw new ApiError(500,"Not authorized as admin")
+    throw new ApiError(500, "Not authorized as admin");
   }
 });
 
@@ -48,7 +48,7 @@ export const teacher = asynchandler(async (req, res, next) => {
   if (req.user && req.user.role === "teacher") {
     next();
   } else {
-    throw new ApiError(500,"Not authorized as Teacher")
+    throw new ApiError(500, "Not authorized as Teacher");
   }
 });
 
@@ -56,6 +56,6 @@ export const student = asynchandler(async (req, res, next) => {
   if (req.user && req.user.role === "student") {
     next();
   } else {
-    throw new ApiError(500,"Not authorized as student")
+    throw new ApiError(500, "Not authorized as student");
   }
 });
