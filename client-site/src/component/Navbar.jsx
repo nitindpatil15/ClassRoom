@@ -1,23 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const Navbar = () => {
-  const navigate = useNavigate()
+  const token = Cookies.get("accessToken");
+  const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  useEffect(()=>{
-    if(3>5){
-      console.log("Condition is true")
-      navigate('/')
+  const handlelogout = async () => {
+    try {
+      const response = await axios.post(
+        "https://classroom-edc1.onrender.com/api/v1/auth/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer${token}`, // Ensure there's a space between Bearer and the token
+          },
+        }
+      );
+      Cookies.remove("accessToken");
+      Cookies.remove("isLoggedIn")
+      alert("LogOut Successfully");
+      navigate("/"); // Optionally, redirect to the homepage or login page after logout
+    } catch (error) {
+      console.error("Error during logout:", error);
+      if (error.response && error.response.status === 401) {
+        alert("Unauthorized access - Please log in again");
+      } else {
+        alert("An unexpected error occurred");
+      }
     }
-    else{
-      console.log("Condition is false")
-    }
-  },[])
+  };
+
   return (
     <>
       <div className="fixed top-0 right-0 left-0 z-50 bg-black border-b-2 flex justify-between p-1  items-center shadow-md">
@@ -36,9 +55,10 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="relative m-2 mr-5">
-          {3 > 5 ? (
+          {!Cookies.get("isLoggedIn") ? (
             <>
-              <button onClick={toggleDropdown}
+              <button
+                onClick={toggleDropdown}
                 className="md:mr-5 font-semibold p-2 text-2xl text-white rounded-full"
               >
                 Login
@@ -79,19 +99,12 @@ const Navbar = () => {
               </button>
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-28 bg-white border border-gray-300 divide-y divide-gray-100 rounded-md shadow-lg">
-                  <Link
-                    to="/user/profile"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    Profile
-                  </Link>
-                  <Link
-                    to="/"
+                  <button
+                    onClick={handlelogout}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Logout
-                  </Link>
+                  </button>
                 </div>
               )}
             </>

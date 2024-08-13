@@ -29,7 +29,7 @@ app.use(cookieParser());
 import authRoutes from "./Routes/authRoutes.js";
 import principalRoutes from "./Routes/principalRoutes.js";
 import teacherRoutes from "./Routes/teacherRoutes.js";
-import dashboardRoutes from "./Routes/dashboardRoute.js";
+import dashboardRoutes from "./Routes/dadhboardRoute.js"
 import { createPrincipal } from "./controllers/auth.controller.js";
 
 createPrincipal();

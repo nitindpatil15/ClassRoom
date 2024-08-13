@@ -1,12 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import "material-icons/iconfont/material-icons.css";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
+import axios from "axios";
+import Cookies from 'js-cookie';
 
 const TeacherLogin = () => {
+  const host = "https://classroom-edc1.onrender.com/api/v1"
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate(); // For navigation after login
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+
+    try {
+      const response = await axios.post(
+        `${host}/auth/teacher/login`,
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      console.log(response)
+      const { token } = response.data.data;
+      Cookies.set("accessToken", token);
+      Cookies.set("isLoggedIn", true);
+      navigate("/"); // Redirect after successful login
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
+
   return (
     <div className="mt-24 mx-8">
       <div className="flex justify-around">
-        <form className="w-[40rem] border-2 p-20">
+        <form onSubmit={handleLogin} className="w-[40rem] border-2 p-20">
           <h1 className="text-white text-4xl font-medium my-6">
             Teacher Login
           </h1>
@@ -18,6 +48,7 @@ const TeacherLogin = () => {
               className="p-3 rounded-lg"
               type="email"
               name="email"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               id="email"
               placeholder="Enter Your Email"
@@ -29,6 +60,7 @@ const TeacherLogin = () => {
               className="p-3 rounded-lg"
               type="password"
               name="password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               id="password"
               placeholder="Password"
