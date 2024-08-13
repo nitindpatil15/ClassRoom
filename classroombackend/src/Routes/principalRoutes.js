@@ -11,7 +11,7 @@ import {
   updateStudentDetails,
   updateTeacherDetails,
 } from "../controllers/principal.controller.js";
-import { admin, verifyJWT } from "../middlewares/authMiddleware.js";
+import { admin, teacher, verifyJWT } from "../middlewares/authMiddleware.js";
 
 const router = Router();
 
@@ -24,9 +24,9 @@ router.get("/teachers", verifyJWT, admin, getAllTeachers);
 router.patch("/teachers/u/:teacherid", verifyJWT, admin, updateTeacherDetails);
 router.delete("/teachers/d/:teacherid", verifyJWT, admin, deleteTeacher);
 
-router.post('/create-student/:classroomId',verifyJWT,admin,registerStudent)
+router.post('/create-student/:classroomId',verifyJWT,teacher,registerStudent)
 router.get("/students", verifyJWT, admin, getAllStudents);
-router.patch("/students/u/:id", verifyJWT, admin, updateStudentDetails);
-router.delete("/students/d/:id", verifyJWT, admin, deleteStudent);
+router.patch("/students/u/:id", verifyJWT, teacher, updateStudentDetails);
+router.delete("/students/d/:id", verifyJWT, teacher, deleteStudent);
 
 export default router;

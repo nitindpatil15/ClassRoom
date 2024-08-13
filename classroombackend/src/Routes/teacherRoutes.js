@@ -11,8 +11,4 @@ router.get(
   teacher,
   getStudentsByClassroom
 );
-router.post('/create-student/:classroomId',verifyJWT,teacher,registerStudent)
-router.patch("/students/u/:id", verifyJWT, teacher, updateStudentDetails);
-router.delete("/students/d/:id", verifyJWT, teacher, deleteStudent);
-
 export default router;

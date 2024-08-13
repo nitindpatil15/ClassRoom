@@ -45,10 +45,10 @@ export const admin = asynchandler((req, res, next) => {
 });
 
 export const teacher = asynchandler(async (req, res, next) => {
-  if (req.user && req.user.role === "teacher") {
+  if (req.user && (req.user.role === "teacher" || req.user.role === "principal")) {
     next();
   } else {
-    throw new ApiError(500, "Not authorized as Teacher");
+    throw new ApiError(500, "Not authorized as Teacher or Principal");
   }
 });
 
