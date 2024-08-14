@@ -24,7 +24,13 @@ const Navbar = () => {
         }
       );
       Cookies.remove("accessToken");
-      Cookies.remove("isLoggedIn")
+      Cookies.remove("isLoggedIn");
+      if (Cookies.get("isAdmin")) {
+        Cookies.remove("isAdmin");
+      }
+      if (Cookies.set("isTeacher")) {
+        Cookies.remove("isTeacher");
+      }
       alert("LogOut Successfully");
       navigate("/"); // Optionally, redirect to the homepage or login page after logout
     } catch (error) {
@@ -50,9 +56,24 @@ const Navbar = () => {
           <Link to="/" className="mx-4 font-semibold md:ml-10 mt-1 text-lg">
             Home
           </Link>
-          <Link to="/" className="mx-4 font-semibold mt-1 text-lg">
-            ClassRoom
-          </Link>
+          {Cookies.get("isAdmin") ? (
+            <>
+              <Link
+                to="/principal/allteachers"
+                className="mx-4 font-semibold mt-1 text-lg"
+              >
+                AllTeachers
+              </Link>
+              <Link
+                to="/principal/allstudents"
+                className="mx-4 font-semibold mt-1 text-lg"
+              >
+                AllStudents
+              </Link>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="relative m-2 mr-5">
           {!Cookies.get("isLoggedIn") ? (
@@ -95,7 +116,7 @@ const Navbar = () => {
                 onClick={toggleDropdown}
                 className="md:mr-5 font-semibold p-2 text-2xl text-white rounded-full"
               >
-                User
+                {Cookies.get("isAdmin")?("Admin"):"User"}
               </button>
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-28 bg-white border border-gray-300 divide-y divide-gray-100 rounded-md shadow-lg">

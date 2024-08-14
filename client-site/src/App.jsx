@@ -6,6 +6,8 @@ import TeacherLogin from './component/TeacherLogin'
 import PrincipalLogin from './component/PrincipalLogin'
 import Home from './component/Home'
 import ClassRoom from './component/ClassRoom'
+import AllTeachers from './component/AllTeachers'
+import AllStudents from './component/AllStudents'
 
 function App() {
 
@@ -19,6 +21,8 @@ function App() {
           <Route path="/student/login" element={<StudentLogin/>}/>
           <Route path="/teacher/login" element={<TeacherLogin/>}/>
           <Route path="/principal/login" element={<PrincipalLogin/>}/>
+          <Route path="/principal/allteachers" element={<AllTeachers/>}/>
+          <Route path="/principal/allstudents" element={<AllStudents/>}/>
         </Routes>
       </Router>
     </>

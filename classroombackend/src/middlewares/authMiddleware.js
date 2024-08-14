@@ -52,10 +52,3 @@ export const teacher = asynchandler(async (req, res, next) => {
   }
 });
 
-export const student = asynchandler(async (req, res, next) => {
-  if (req.user && req.user.role === "student") {
-    next();
-  } else {
-    throw new ApiError(500, "Not authorized as student");
-  }
-});

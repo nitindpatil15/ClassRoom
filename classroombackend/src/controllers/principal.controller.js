@@ -5,14 +5,21 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 
 export const createClassroom = asynchandler(async (req, res) => {
-  const { name, startTime, endTime, days } = req.body;
+  const { name, startTime, endTime, days, teacherId } = req.body;
   try {
-    const classroom = new Classroom({
+    const classroomData = {
       name,
       startTime,
       endTime,
       days,
-    });
+    };
+
+    // Add teacherId if provided
+    if (teacherId) {
+      classroomData.teacher = teacherId;
+    }
+
+    const classroom = new Classroom(classroomData);
     await classroom.save();
 
     return res
@@ -25,33 +32,37 @@ export const createClassroom = asynchandler(async (req, res) => {
 });
 
 export const assignTeacher = asynchandler(async (req, res) => {
-  const { classroomId, teacherId } = req.params;
+  const { classroomId } = req.params;
+  const { name, email, password } = req.body; // Assume teacher's details are sent in the request body
+
   try {
-    const teacher = await User.findById(teacherId);
-    if (teacher.role !== "teacher") {
-      throw new ApiError(400, "Invalid teacher");
-    }
+    // Create a new teacher
+    const newTeacher = await User.create({
+      name,
+      email,
+      password,
+      role: 'teacher',
+    });
 
-    // Check if the teacher is already assigned to a classroom
-    if (teacher.classroom) {
-      throw new ApiError(
-        400,
-        "This teacher is already assigned to another classroom"
-      );
-    }
-
+    // Assign the newly created teacher to the classroom
     const classroom = await Classroom.findById(classroomId);
-    classroom.teacher = teacherId;
+    if (!classroom) {
+      throw new ApiError(404, "Classroom not found");
+    }
+
+    classroom.teacher = newTeacher._id;
     const assignedTeachertoClass = await classroom.save();
 
-    teacher.classroom = classroomId;
-    await teacher.save();
+    // Update the teacher's classroom field
+    newTeacher.classroom = classroomId;
+    await newTeacher.save();
 
-    return res
-      .status(200)
-      .json(200, assignedTeachertoClass, "Teacher assigned");
+    return res.status(200).json({
+      message: "Teacher registered and assigned successfully",
+      data: assignedTeachertoClass,
+    });
   } catch (error) {
-    throw new ApiError(500, "Error assigning teacher");
+    throw new ApiError(500, error || "Error assigning teacher");
   }
 });
 
@@ -213,6 +224,7 @@ export const registerStudent = async (req, res) => {
         new ApiResponse(200, student, "Student created and Added to Class")
       );
   } catch (error) {
+    console.log(error)
     throw new ApiError(500, "Error registering student");
   }
 };
@@ -237,9 +249,9 @@ export const registerTeacher = async (req, res) => {
     res
       .status(201)
       .json(
-        new ApiResponse(200, teacher, "Student created and Added to Class")
+        new ApiResponse(200, teacher, "Teacher created and Added to Class")
       );
   } catch (error) {
-    throw new ApiError(500, "Error registering student");
+    throw new ApiError(500, "Error registering Teacher");
   }
 };

@@ -30,6 +30,7 @@ import authRoutes from "./Routes/authRoutes.js";
 import principalRoutes from "./Routes/principalRoutes.js";
 import teacherRoutes from "./Routes/teacherRoutes.js";
 import dashboardRoutes from "./Routes/dadhboardRoute.js"
+import timetableRoutes from "./Routes/timetableRoutes.js"
 import { createPrincipal } from "./controllers/auth.controller.js";
 
 createPrincipal();
@@ -39,5 +40,6 @@ app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/principal', principalRoutes);
 app.use('/api/v1/teacher', teacherRoutes);
+app.use('/api/v1/timetable', timetableRoutes);
 
 export { app };

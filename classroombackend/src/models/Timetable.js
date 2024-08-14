@@ -1,20 +1,30 @@
 import mongoose from "mongoose";
 
 const timetableSchema = new mongoose.Schema({
-  classroom: {
+  classroomId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Classroom",
+    ref: 'Classroom',
+    required: true,
   },
   subject: {
     type: String,
     required: true,
   },
   startTime: {
-    type: String,
+    type: String, // Consider using Date for actual time values
     required: true,
   },
   endTime: {
+    type: String, // Consider using Date for actual time values
+    required: true,
+  },
+  day: {
     type: String,
+    required: true,
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Assuming you have a User model
     required: true,
   },
 });

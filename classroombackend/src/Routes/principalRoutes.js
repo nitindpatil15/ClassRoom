@@ -18,7 +18,7 @@ const router = Router();
 router.post("/create-teacher", verifyJWT, admin,registerTeacher);
 
 router.post("/create-classroom", verifyJWT, admin,createClassroom);
-router.post("/assign-teacher/:classroomId/:teacherId", verifyJWT, admin,assignTeacher);
+router.post("/assign-teacher/:classroomId", verifyJWT, admin,assignTeacher);
 
 router.get("/teachers", verifyJWT, admin, getAllTeachers);
 router.patch("/teachers/u/:teacherid", verifyJWT, admin, updateTeacherDetails);

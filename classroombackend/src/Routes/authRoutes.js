@@ -8,6 +8,6 @@ router.post('/Student/login', loginUser);
 router.post("/admin/login", PrincipalLogin);
 router.post("/teacher/login", teacherLogin);
 router.post("/logout",verifyJWT, logout);
-router.post("/users/profile",verifyJWT, getCurrentUser);
+router.get("/users/profile",verifyJWT, getCurrentUser);
 
 export default router;
