@@ -272,7 +272,7 @@ const ClassRoom = () => {
                 <td className="py-2 px-4">{timetable.subject}</td>
                 <td className="py-2 px-4">{timetable.startTime}-{timetable.endTime}</td>
                 <td className="py-2 px-4">{timetable.day}</td>
-                {Cookies.get("isTeacher")||Cookies.get("isAdmin") && (
+                {Cookies.get("isTeacher")||Cookies.get("isAdmin") ? (
                   <td className="py-2 px-4">
                     <button
                       onClick={() => handleUpdateTimetable(timetable)}
@@ -287,7 +287,7 @@ const ClassRoom = () => {
                       Delete
                     </button>
                   </td>
-                )}
+                ):(<></>)}
               </tr>
             ))}
           </tbody>
