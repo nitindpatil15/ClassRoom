@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 const AddClassroom = ({ onClose, onAdd }) => {
   const token = Cookies.get("accessToken");
-  const host = "http://localhost:5600/api/v1";
+  const host = "https://classroom-edc1.onrender.com/api/v1";
   const [classroomData, setClassroomData] = useState({
     name: "",
     startTime: "",

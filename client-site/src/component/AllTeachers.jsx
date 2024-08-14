@@ -7,7 +7,7 @@ import RegisterTeacher from "./RegisterTeacher";
 
 const AllTeachers = () => {
   const token = Cookies.get("accessToken");
-  const host = "http://localhost:5600/api/v1";
+  const host = "https://classroom-edc1.onrender.com/api/v1";
   const [teachers, setTeachers] = useState([]);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

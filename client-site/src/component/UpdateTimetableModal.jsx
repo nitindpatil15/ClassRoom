@@ -36,7 +36,7 @@ const UpdateTimetableModal = ({ timetable, onClose, onUpdate }) => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:5600/api/v1/timetable/timetables/u/${timetable._id}`,
+        `https://classroom-edc1.onrender.com/api/v1/timetable/timetables/u/${timetable._id}`,
         formData,
         {
           headers: {

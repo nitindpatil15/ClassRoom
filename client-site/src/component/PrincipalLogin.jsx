@@ -5,7 +5,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const PrincipalLogin = () => {
-  const host = "http://localhost:5600/api/v1";
+  const host = "https://classroom-edc1.onrender.com/api/v1";
   // const host = "https://classroom-edc1.onrender.com/api/v1";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

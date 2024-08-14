@@ -7,7 +7,7 @@ import UpdateEntityModal from "./UpdateEntityModal";
 const AllStudents = () => {
   const { id } = useParams();
   const token = Cookies.get("accessToken");
-  const host = "http://localhost:5600/api/v1";
+  const host = "https://classroom-edc1.onrender.com/api/v1";
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

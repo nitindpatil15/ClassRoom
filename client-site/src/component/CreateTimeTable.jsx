@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 
 const CreateTimeTable = ({ onClose, onCreateTimetable, classId }) => {
   const token = Cookies.get("accessToken");
-  const host = "http://localhost:5600/api/v1";
+  const host = "https://classroom-edc1.onrender.com/api/v1";
   const [timetableData, setTimetableData] = useState({
     subject: "",
     startTime: "",
